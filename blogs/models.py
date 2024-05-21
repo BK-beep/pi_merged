@@ -34,3 +34,18 @@ class Category(models.Model):
         verbose_name_plural = "categories"  
     def __str__(self):
         return self.name
+
+class Subscriber(models.Model):
+    email = models.CharField(unique=True, max_length=50)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.email
+    
+class Newsletter(models.Model):
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.subject

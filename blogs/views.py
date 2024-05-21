@@ -1,8 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import *
 from users.models import User
-
+from django.contrib import messages
+from django.template.loader import render_to_string
+from .forms import SubscriberForm, NewsletterForm
+from django.core.mail import send_mail,EmailMultiAlternatives
+from django.conf import settings
 def profile(request):
     user=User.objects.get(first_name='khaoula')
     posts = Post.objects.filter(author=user).order_by('-created_at')
@@ -71,3 +75,76 @@ def add_comment(request, slug):
     else:
         # Handle non-POST requests (if any)
         return HttpResponse('Method Not Allowed', status=405)
+    
+
+def reply(request, comment_id):
+    if request.method == 'POST':
+        parent = get_object_or_404(Comment, id=comment_id)
+        content = request.POST.get('content')
+        
+        if content:
+            new_reply = Comment.objects.create(
+                post=parent.post,
+                content=content,
+                author=None,
+                parent_comment=parent
+            )
+            print("New reply created for comment:", parent.content)
+            return redirect('blog_details', blog_id=parent.post.id)
+        else:
+            return HttpResponse('Invalid reply data', status=400)
+    else:
+        return HttpResponse('Method Not Allowed', status=405)
+
+def subscribe(request):
+    if request.method == 'POST':
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            form.save()
+            subject = "Thanks for subscribing!"
+            body = "Welcome to our newsletter! You'll receive updates on our latest blog posts and more."
+            html_content = render_to_string('newsletter_email.html', {'subject': subject, 'body': body})
+
+            try:
+                # Create the email
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body=body,  # Plain text content
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=['berkaouikhawla2002@gmail.com']  # Replace with the recipient's email address
+                )
+                email.attach_alternative(html_content, "text/html")
+                email.send()
+                print(f'Email send result: {email}')  # Debugging: print the result
+                messages.success(request, 'Subscription successful! A confirmation email has been sent.')
+            except Exception as e:
+                print(f'Error sending email: {e}')  # Debugging: print any exceptions
+                messages.error(request, 'Subscription successful, but there was an error sending the confirmation email.')
+            return redirect('thank_you')
+    else:
+        form = SubscriberForm()
+    return render(request, 'subscribe.html', {'form': form})
+
+def send_newsletter(request):
+    if request.method == 'POST':
+        form = NewsletterForm(request.POST)
+        if form.is_valid():
+            newsletter = form.save()
+            subscribers = Subscriber.objects.all()
+            for subscriber in subscribers:
+                send_mail(
+                    newsletter.subject,
+                    newsletter.body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [subscriber.email]
+                )
+            return redirect('newsletter_sent')
+    else:
+        form = NewsletterForm()
+    return render(request, 'send_newsletter.html', {'form': form})
+
+def thank_you(request):
+    return render(request, 'thank_you.html')
+
+def newsletter_sent(request):
+    return render(request, 'newsletter_sent.html')
