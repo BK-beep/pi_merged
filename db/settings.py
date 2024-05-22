@@ -26,12 +26,14 @@ SECRET_KEY = 'django-insecure-8p_ij8(^cmt&1l&@m6e-42lvuqp)bhg570sk=w=w3j)#_xgu8+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+os.environ["OPENAI_API_KEY"] = "sk-proj-yMBGzU9KISLCPan4HqGMT3BlbkFJmypV2vhSQwwzVerPLIna"
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'CLIENT.apps.ClientConfig',
     'blogs.apps.BlogsConfig',
     'appointments.apps.AppointmentsConfig',
     'specialists.apps.SpecialistsConfig',
@@ -50,6 +52,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 ###########
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -126,6 +129,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_URL = "client-login"
+
+LOGIN_REDIRECT_URL = "client-chat"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

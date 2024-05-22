@@ -1,0 +1,48 @@
+{% extends "pluging.html" %}
+{% load static %}
+{% block content %}
+<body class="body-wrapper" data-spy="scroll" data-target=".privacy-nav">
+    <section class="user-login section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="block">
+                        <div class="image align-self-center">
+                            <img class="img-fluid" src="{% static 'img/login_bg.jpg' %}" alt="desk-image" ></div>
+                        <div class="content text-center">
+                            <div class="logo">
+                                <a href="{% url 'client-index' %}"><img src="{% static 'img/new_logo.png' %}" width="150"></a>
+                            </div>
+                            <div class="title-text">
+                                <h3>Sign in to To Your Account</h3>
+                            </div>
+                            {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{form.username}}
+                                {{form.password}}
+                                <button class="btn btn-main-sm"style="background-color: #BE959F; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 50px; transition: background-color 0.3s ease;">Sign in</button>
+                            </form>
+                            <div class="new-acount">
+                                <p>Don't Have an account?
+                                <a class="btn btn-round-full" href="{% url 'client-signup' %}" style="background-color: #BE959F; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 50px; transition: background-color 0.3s ease;">
+                                 SIGN UP<i class="icofont-simple-right ml-2" style="margin-left: 10px;"></i>
+                                </a>
+                            </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="scroll-top-to">
+        <i class="ti-angle-up"></i>
+    </div>
+{% endblock content %}
