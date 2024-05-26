@@ -33,11 +33,11 @@ os.environ["OPENAI_API_KEY"] = "sk-proj-yMBGzU9KISLCPan4HqGMT3BlbkFJmypV2vhSQwwz
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'CLIENT.apps.ClientConfig',
     'blogs.apps.BlogsConfig',
     'appointments.apps.AppointmentsConfig',
     'specialists.apps.SpecialistsConfig',
-    'users.apps.UsersConfig',
     'dashboard.apps.DashboardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -61,6 +61,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+AUTH_USER_MODEL = 'users.User'
+
+
 ROOT_URLCONF = 'db.urls'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
@@ -76,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },

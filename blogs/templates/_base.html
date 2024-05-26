@@ -3,6 +3,21 @@
 <head>
     <title>Blog Posts</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .bg-gradient {
+            background: linear-gradient(90deg, #4F46E5 0%, #8F94FB 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #4F46E5 0%, #8F94FB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 </head>
 <body>
 <!-- component -->
@@ -47,13 +62,13 @@
           <!-- Texto -->
           <div class="flex flex-col items-end ">
             <!-- Nome -->
-            <div class="text-md font-medium ">Unknow Unknow</div>
+            <div class="text-md font-medium ">{{user.first_name}} {{user.last_name}}</div>
             <!-- Título -->
             <div class="text-sm font-regular">Student</div>
           </div>
           
           <!-- Foto -->
-          <div class="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-SerenePink"></div>
+          <div class="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-SerenePink"><img class="rounded-full w-10 h-10 mr-2" src="{{ user.thumbnail.url }}" alt="User"></div>
         </div>
       </header>
   
@@ -63,7 +78,29 @@
       {% endblock page_title %}
       <!-- Main -->
       {% block page_content %}
-      lalalala
+
+    <div class="relative">
+      <div
+        class="block rounded-lg bg-white text-white shadow-secondary-1 dark:bg-surface-dark">
+        <img
+          class="rounded-lg"
+          src="https://tecdn.b-cdn.net/img/new/slides/017.webp"
+          alt="" />
+        <div class="absolute top-0 p-6">
+          <h5 class="mb-2 text-xl font-medium leading-tight ">
+            Welcome to Your Blog
+          </h5>
+          <p class="mb-4 text-base">
+            Congratulations on starting your own blog! This is your space to share your thoughts, ideas, and experiences
+            with the world. Whether you're passionate about technology, travel, cooking, or anything else, your blog
+            is where you can express yourself freely.
+          </p>
+          <p class="text-base">
+            <small>Last updated 3 mins ago</small>
+          </p>
+        </div>
+      </div>
+    </div>
       {%endblock page_content%}
     </div>
     </div>

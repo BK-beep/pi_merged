@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block page_content %}
+<div style="background-image: url('{% static 'blog_posts/pawel-czerwinski-APVgVX_yDDc-unsplash.jpg' %}')" class="min-h-screen text-center font-bold text-2xl m-5 text-gray-800">
+<form method="POST">
+    {% csrf_token %}
+    <div class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+        <div>
+            <div class="form-control">
+                {{form.title}}
+            </div>
+        </div>
+        <div>
+            <div class="form-control">
+                {{form.content}}
+            </div>
+        </div>
+        <div>
+            <div class="form-control">
+                {{form.slug}}
+            </div>
+        </div>
+        <div>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="default_size">Default size</label>
+            <div class="form-control">
+                {{form.image}}
+            </div>
+        </div>
+
+        <!-- buttons -->
+        <div class="buttons flex">
+            <div class="mt-8">
+                <button class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Add post</button>
+            </div>
+        </div>
+    </div>
+</form>
+<a href="{% url 'add_post' %}" class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">Post</div>
+
+</div>
+  {% endblock page_content %}

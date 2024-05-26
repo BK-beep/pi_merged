@@ -4,104 +4,84 @@
 <head>
     <meta charset="utf-8">
     <title>Serene Soul : Chat</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-    <link rel="icon" href="{% static 'img/logo_circulaire.png' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="icon" href="{% static 'img/new_logo.png' %}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container-fluid position-relative bg-white d-flex p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
+<body class="font-sans leading-normal tracking-normal min-h-screen">
+    <div class="container mx-auto flex flex-wrap py-6 min-h-screen">
 
         <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3">
-            <nav class="navbar bg-light navbar-light">
-                <a href="{% url 'client-index' %}" class="navbar-brand mx-4 mb-3">
-                    <img src="{% static 'img/logo_circulaire.png' %}" width="150">
-                </a>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="navbar-nav w-100">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div class="d-flex mb-3">
-                                <input name="name" class="form-control bg-transparent" type="text" placeholder="Enter Conversation Name">
-                                <button type="submit" class="btn btn-primary ms-2">Add</button>
-                            </div>
+        <aside class="w-full h-full md:w-1/4 lg:w-1/5 px-4 min-h-screen">
+            <nav class="bg-white shadow-md rounded-lg min-h-screen">
+                <div class="p-6">
+                    <a href="{% url 'client-index' %}" class="block text-center mb-6">
+                        <img src="{% static 'img/logo_circulaire.png' %}" width"100" class="mx-auto w-36" alt="Logo">
+                    </a>
+                    <form method="POST" class="mb-4">
+                        {% csrf_token %}
+                        <div class="flex items-center mb-4">
+                            <input name="name" class="bg-gray-100 border border-gray-300 rounded-lg py-2 px-4 w-full" type="text" placeholder="Enter Conversation Name">
+                            <button type="submit" class="ml-2 bg-SerenePink1 text-white rounded-lg py-2 px-4">Add</button>
                         </div>
-                    </div>
-                </form>
-                <div class="navbar-nav w-100" id="chat-messages">
-                    {% for conversation in conversations %}
-                        <li class="nav-item nav-link" data-chat-user-id="{{conversation.pk}}">
-                            <a href="{% url 'client-delete' conversation.pk %}">
-                                <i class="fa fa-trash">
-                                </i>
-                            </a>
-
-                            
-                            {{conversation.name}}
-                        </li>
-                    {% endfor %}
+                    </form>
+                    <ul class="space-y-2">
+                        {% for conversation in conversations %}
+                            <li class="flex justify-between items-center bg-gray-200 rounded-lg px-4 py-2">
+                                <span>{{ conversation.name }}</span>
+                                <a href="{% url 'client-delete' conversation.pk %}" class="text-red-500">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </nav>
-        </div>
+        </aside>
         <!-- Sidebar End -->
 
         <!-- Content Start -->
-        <div class="content">
+        <main class="w-full md:w-3/4 lg:w-4/5 px-4">
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-                </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{% static 'img/user.jpg' %}" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">{{user}}</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="{% url 'client-logout' %}" class="dropdown-item">Log Out</a>
+            <nav class="bg-white shadow-md rounded-lg mb-6 flex items-center justify-between p-4">
+                <div class="flex items-center">
+                    <button class="md:hidden text-gray-600 focus:outline-none">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a href="#" class="text-xl font-semibold text-gray-800 ml-4 hidden md:block">Serene Soul Chat</a>
+                </div>
+                <div class="flex items-center">
+                    <img class="rounded-full w-10 h-10 mr-2" src="{{ user.thumbnail.url }}" alt="User">
+                    <span class="hidden md:block">{{ user }}</span>
+                    <div class="ml-4 relative">
+                        <button class="text-gray-600 focus:outline-none">
+                            <i class="fa fa-chevron-down"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 hidden">
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">My Profile</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
+                            <a href="{% url 'client-logout' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Log Out</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
 
-
-            <!-- Page Start -->
+            <!-- Page Content Start -->
             {% block content %}
             {% endblock content %}
-            <!-- Page End -->
-
-        </div>
+            <!-- Page Content End -->
+        </main>
         <!-- Content End -->
+
     </div>
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'lib/chart/chart.min.js' %}"></script>
     <script src="{% static 'lib/easing/easing.min.js' %}"></script>
     <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>

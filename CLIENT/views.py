@@ -6,30 +6,71 @@ from .models import Conversation, Message
 from .serene import Serene
 from django.http import JsonResponse
 from django.core import serializers
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth import authenticate, login
+from .forms import UserLoginForm
+
+
+#import application blogs views
+from blogs.views import *
+from django.contrib.auth import logout
 
 # instantiate the chatbot
 chatbot = Serene()
 
+
+def client_logout(request):
+    logout(request)
+    return redirect('client-login')
 # Create your views here.
 def client_index(request):
     return render(request, "index.html")
 
-# Create your views here.
+
+
+@csrf_protect
 def client_signup(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('first_name') + form.cleaned_data.get('last_name')
             messages.success(request, f'Account created for {username} successfully!')
-            return redirect('client-login')
+            return redirect('client-index')
         else :
             print(form.errors)
             messages.error(request, f'Account not created! Please try again.')
             return redirect('client-signup')
     else:
         form = UserRegisterForm()
-    return render(request, 'auth/client_signup.html', {'form': form})
+    return render(request, 'auth/signup.html', {'form': form})
+
+def client_login(request):
+    if request.method == 'POST':
+        print('login')
+        form = UserLoginForm(request.POST)
+        print('login')
+        if form.is_valid():
+            print('form is valid')
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                print('created succ')
+                return redirect('client-chat')  # Redirect to home or any other desired page
+            else:
+                # Authentication failed
+                print('user authentication failed')
+                messages.error(request, 'Invalid email or password.')
+        else:
+            print('form not valid')
+            print(form.errors)  # Print form errors to identify validation issues
+    else:
+        print('not login')
+        form = UserLoginForm()
+
+    return render(request, 'auth/login.html', {'form': form})
 
 @login_required
 def client_chat(request):
@@ -40,9 +81,11 @@ def client_chat(request):
             )
         return redirect('client-chat')
     conversations = Conversation.objects.filter(user=request.user)
+    
     return render(request , "app/client_chat.html", {'conversations': conversations})
 
 # Chat view
+@login_required
 def client_send_message(request):
     conversation = Conversation.objects.get(id=request.POST.get('conversation_id'))
     Message.objects.create(
@@ -64,6 +107,7 @@ def client_get_message(request):
     data = serializers.serialize('json', messages)
     return JsonResponse(data, safe=False)
 
+@login_required
 def client_delete_conversation(request ,pk):
     conversation = Conversation.objects.get(id=pk)
     conversation.delete()

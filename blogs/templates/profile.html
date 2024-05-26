@@ -81,7 +81,9 @@
   <section class="relative bg-blueGray-200 text-center py-16">
     <details style="background-color: #e4eaef;border-radius: 5px;">
       <summary class="font-normal text-blueGray-200" >
-        <button class="bg-SerenePink text-white font-bold py-2 px-4 rounded-full inline-block shadow-lg hover:bg-SerenePink" type="button">Show More</button>
+        {% comment %} <a class="bg-SerenePink text-white font-bold py-2 px-4 rounded-full inline-block shadow-lg hover:bg-SerenePink" href="{% url 'add_post' %}">Show More</a> {% endcomment %}
+        <div class="bg-SerenePink text-white font-bold py-2 px-4 rounded-full inline-block shadow-lg hover:bg-SerenePink">Show More</div>
+
       </summary>
       {% block more_posts %}
         {% include 'profile_posts.html' %}

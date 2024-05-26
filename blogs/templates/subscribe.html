@@ -1,7 +1,8 @@
 {% extends "_base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block page_content %}
-<div style="background-image: url('../static/blog_posts/kelly-sikkema-NU_rR7TgE-M-unsplash.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="h-screen rounded-lg pb-2 w-full overflow-y-auto">
+<div style="background-image: url('{% static 'blog_posts/kelly-sikkema-NU_rR7TgE-M-unsplash.jpg' %}'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="h-screen rounded-lg pb-2 w-full overflow-y-auto">
     <div class="2xl:mx-auto 2xl:container mx-4 py-16">
         <div class="w-full relative flex items-center justify-center">
             <div class="rounded-lg bg-gray-800 bg-opacity-80 md:my-16 lg:py-16 py-10 w-full md:mx-24 md:px-12 px-4 flex flex-col items-center justify-center relative z-40">

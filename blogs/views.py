@@ -4,11 +4,17 @@ from .models import *
 from users.models import User
 from django.contrib import messages
 from django.template.loader import render_to_string
-from .forms import SubscriberForm, NewsletterForm
+from .forms import SubscriberForm, NewsletterForm,PostForm
 from django.core.mail import send_mail,EmailMultiAlternatives
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import PostForm
+from .models import Post
+
 def profile(request):
-    user=User.objects.get(first_name='khaoula')
+    user=request.user
     posts = Post.objects.filter(author=user).order_by('-created_at')
 
     for post in posts:
@@ -20,10 +26,29 @@ def profile(request):
     
     return render(request, 'profile.html',context)
 
+
+
+def add_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user  # Get the currently logged in user
+            post.save()
+            messages.success(request, 'Post created successfully!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Post creation failed. Please try again.')
+            return redirect('add_post')
+    else:
+        form = PostForm()
+    return render(request, 'add_post.html', {'form': form})
+
+
 def blog_posts(request):
     posts = Post.objects.all().order_by('-created_at')
     context={
-        'authenticated_user' : User.objects.get(first_name='khaoula'),
+        'authenticated_user' : request.user,
         'posts': posts
     }
     for post in posts:
@@ -33,6 +58,14 @@ def blog_posts(request):
         print("image url--->"+post.image.name) 
 
     return render(request, 'blog.html', context)
+@login_required
+
+def blog_home(request):
+    context={
+        #get the currently auth user,
+        'authenticated_user' : User.objects.get(first_name='khaoula'),
+        }
+    return render(request, '_base.html', context)
 
 
 def blog_category(request, category):

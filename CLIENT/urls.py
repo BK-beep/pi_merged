@@ -8,16 +8,8 @@ from .forms import UserLoginForm
 urlpatterns = [
     path("", views.client_index , name="client-index"),
     path("signup", views.client_signup , name="client-signup"),
-    path("login", auth_views.LoginView.as_view(
-                        template_name="auth/client_login.html",
-                        authentication_form=UserLoginForm
-                        ) , 
-                        name="client-login"
-        ),
-    path('logout/' , auth_views.LogoutView.as_view(
-                        next_page='client-login') , 
-                        name='client-logout'
-        ),
+    path("login",views.client_login ,name="client-login"),
+    path("logout/", views.client_logout, name="client-logout"),
     path("chat/", views.client_chat , name="client-chat"),
     path("api/send_message/", views.client_send_message , name="client-send-message"),
     path("api/get_message/", views.client_get_message , name="client-get-message"),

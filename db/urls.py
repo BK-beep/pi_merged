@@ -7,8 +7,8 @@ from .views import index
 
 
 urlpatterns = [
-    path('', client_signup, name='signup'),
-    path('/admin', admin.site.urls),
-    path("/client", include("CLIENT.urls")),
-    path("/blog", include("blogs.urls")),
+    path('', client_index, name='home'),
+    path('admin/', admin.site.urls),
+    path("client/", include("CLIENT.urls")),
+    path("blog/", include("blogs.urls")),
 ]
