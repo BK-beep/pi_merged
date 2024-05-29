@@ -1,18 +1,17 @@
 {% extends "app/base_app.html" %}
 {% load static %}
 {% block content %}
-<div class="container-fluid pt-4 px-4">
-    <div class="row vh-20 rounded justify-content-center mx-0" id="chat"></div>
-    <div class="row vh-75 rounded align-items-end justify-content-center mx-0">
-        <div class="col-xl-12 mb-3 p-2">
-            <div class="bg-light rounded p-4" >
-                <h6 class="mb-4">Start Chating</h6>
+<div class="container-fluid pt-4">
+    <div class="row vh-75 rounded justify-content-center mx-0" id="chat"></div>
+    <div class="w-3/4 absolute inset-x-0 bottom-0 h-16  row vh-20 rounded align-items-end justify-content-center mx-0">
+        <div class="w-full mb-3">
+            <div class="bg-light rounded">
                 <form action="#" id="chat_form">
                     {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control h-400" placeholder="Can You ..." aria-label="Username" aria-describedby="basic-addon1">
-                        <button class="input-group-text" id="basic-addon1" type="submit">
-                            <i class="fa fa-paper-plane"></i>
+                    <div class="absolute flex flex-row inset-x-0 bottom-0 h-16 w-full">
+                        <input type="text" class="form-control w-full bg-white shadow-md rounded-lg mb-6 flex p-4 focus:outline-none" placeholder="Type your message..." aria-label="Message" aria-describedby="send-button">
+                        <button class="bg-white shadow-md rounded-lg mb-6 flex p-4 text-white px-4 py-2 rounded-r-md focus:outline-none focus:ring-2  focus:ring-opacity-50" id="send-button" type="submit">
+                            <svg width="20" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="sendIconTitle" stroke="#be959f" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title id="sendIconTitle">Send</title> <polygon points="21.368 12.001 3 21.609 3 14 11 12 3 9.794 3 2.394"></polygon> </g></svg>
                         </button>
                     </div>
                 </form>

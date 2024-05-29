@@ -7,22 +7,22 @@
         {% if posts %}
         {% for post in posts %}
             <div class="w-96 bg-white shadow-md border border-gray-200 rounded-lg">
-                {% if post.image %}
                 <a href="#">
-                    <img class="h-60 w-full object-cover rounded-lg" src="{{ post.image.url }}" alt="{{ post.title }}">
+                    {% if post.image %}
+                        <img class="h-60 w-full object-cover rounded-lg" src="{{ post.image.url }}" alt="{{ post.title }}">
+                    {%else%}
+                        <img class="h-60 w-full object-cover rounded-lg" src="{% static "blog_posts/placeholder.png" %}" alt="{{ post.title }}">
+                    {% endif %}
                 </a>
-                {%else%}
-                <a href="#">
-                    <img class="h-60 w-full object-cover rounded-lg" src="{% static "placeholder" %} %}" alt="{{ post.title }}">
-                </a>
-                {% endif %}
                 <div class="p-4">
                     <!-- Author's Section -->
                     <div class="flex items-center space-x-4 mb-4">
                         <!-- Author Avatar -->
-                        <div class="h-8 w-8 rounded-full bg-gray-200 border-2 border-SerenePink flex-shrink-0">
+                        <div class="h-10 w-10 rounded-full bg-gray-200 border-2 border-SerenePink flex-shrink-0">
                             {% if post.author.image %}
-                                <img class="rounded-full h-10 w-10" src="{{ post.author.image.url }}" alt="{{post.author.first_name}} {{post.author.first_name}}">
+                                <img width="30" class="h-full w-full object-cover rounded-full" src="{{ post.author.image.url }}" alt="{{post.author.first_name}} {{post.author.first_name}}">
+                            {% else %}
+                                <svg class="h-full w-full object-cover rounded-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#13472E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#13472E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                             {% endif %}
                         </div>
                         <!-- Author Name -->
