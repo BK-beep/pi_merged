@@ -43,8 +43,9 @@ class PostForm(forms.ModelForm):
         fields = ['title', 'content','slug', 'image']  # Include all the fields you want to include in the form
         widgets = {
             'title': forms.TextInput(attrs={'class': 'title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none', 'spellcheck': 'false', 'placeholder': 'Title'}),
-            'content': forms.Textarea(attrs={'class': 'description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none', 'spellcheck': 'false', 'placeholder': 'Describe everything about this post here'}),
+            'content': forms.Textarea(attrs={'class': 'description bg-gray-100 sec p-3 h-60 border mb-4 border-gray-300 outline-none', 'spellcheck': 'false', 'placeholder': 'Describe everything about this post here'}),
             'slug': forms.TextInput(attrs={'class': 'title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none', 'spellcheck': 'false', 'placeholder': 'Slug'}),
-            'image': forms.FileInput(attrs={'class':'block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400' ,'id':"default_size",'type':'file'}),
+            'image': forms.FileInput(attrs={'class':'block w-full mb-5 text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400' ,'id':"default_size",'type':'file'}),
         }
+    
  

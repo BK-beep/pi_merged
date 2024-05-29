@@ -12,6 +12,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import PostForm
 from .models import Post
+from CLIENT.views import client_logout
+
 
 def profile(request):
     user=request.user
@@ -58,7 +60,7 @@ def blog_posts(request):
         print("image url--->"+post.image.name) 
 
     return render(request, 'blog.html', context)
-@login_required
+
 
 def blog_home(request):
     context={
@@ -98,7 +100,8 @@ def add_comment(request, slug):
             # Create a new comment associated with the post
             new_comment = Comment.objects.create(
                 post=post,
-                content=content
+                content=content,
+                author=request.user
             )
             print("New comment created:", new_comment.content)
             return redirect('blog_details', blog_id=post.id)  # Redirect to the post detail page
@@ -119,10 +122,10 @@ def reply(request, comment_id):
             new_reply = Comment.objects.create(
                 post=parent.post,
                 content=content,
-                author=None,
+                author=request.user,
                 parent_comment=parent
             )
-            print("New reply created for comment:", parent.content)
+            print("New reply created for comment:", new_reply)
             return redirect('blog_details', blog_id=parent.post.id)
         else:
             return HttpResponse('Invalid reply data', status=400)

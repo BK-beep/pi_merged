@@ -5,14 +5,14 @@
         {% for post in posts %}
                 <div class="w-96 bg-white shadow-md border border-gray-200 rounded-lg">
                     <a href="#">
-                        <img class="h-60 w-full object-cover rounded-lg" src="/{{ post.image }}" alt="{{ post.title }}">
+                        <img class="h-full w-full object-cover rounded-lg" src="/{{ post.image }}" alt="{{ post.title }}">
                     </a>
                     <div class="p-4">
                         <!-- Author's Section -->
                         <div class="flex items-center space-x-4 mb-4">
                             <!-- Author Avatar -->
                             <div class="h-10 w-10 rounded-full bg-gray-200 border-2 border-SerenePink flex-shrink-0">
-                                <img class="rounded-full" src="{{ post.author.image.url }}" alt="{{post.author.first_name}} {{post.author.first_name}}">
+                                <img class="w-full h-full rounded-full" src="{{ post.author.image.url }}" alt="{{post.author.first_name}} {{post.author.first_name}}">
                             </div>
                             <!-- Author Name -->
                             <span class="text-sm font-medium text-SerenePink">{{ post.author }}</span>

@@ -1,25 +1,25 @@
 var ChatosExamle = {
-        Message: {
-            add: function (message, time, image,chat) {
-                $('#chat').append(
-                    '<div class="col-xl-12 p-2">\
-                        <div class="h-10 bg-light rounded p-4">\
-                            <div class="d-flex align-items-center border-bottom py-3">\
-                                '+image+'\
-                                <div class="w-100 ms-3">\
-                                    <div class="d-flex w-100 justify-content-between">\
-                                        <h6 class="mb-0">'+chat+'</h6>\
-                                        <small>'+time+'</small>\
-                                    </div>\
-                                    <span>'+message+'</span>\
+    Message: {
+        add: function (message, time, image, chat) {
+            $('#chat').append(
+                '<div class=" w-3/4 p-2">\
+                    <div class=" flex flex-row h-10 bg-gray-100 rounded p-4">\
+                        <div class="flex items-center border-b py-3">\
+                            '+image+'\
+                            <div class="w-full ml-3">\
+                                <div class="flex w-full justify-between">\
+                                    <h6 class="mb-0">'+chat+'</h6>\
+                                    <small>'+time+'</small>\
                                 </div>\
+                                <span>'+message+'</span>\
                             </div>\
                         </div>\
-                    </div>'
-                );
-            }
-        },
-    };
+                    </div>\
+                </div>'
+            );
+        }
+    },
+};
 
     function sendMessage(message, id) {
         $.ajax({
